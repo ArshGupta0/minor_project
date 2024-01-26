@@ -6,6 +6,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="/static/css/main.css">
     <link rel="shortcut icon" href="/static/icons/1f47d.svg" type="image/x-icon">
+    <style>
+        .right2{
+            display: none;
+        }
+    </style>
 </head>
 <body class="bg-chatblack-50">
     <div class="flex h-[100vh] text-white">
@@ -13,16 +18,51 @@
             <div class="flex justify-center align-middle">
                 <button class="flex-1 p-4 hover:opacity-50 my-2 border border-white rounded-md">+  New Chat</button>
             </div>
+            <div class="chats flex flex-col justify-center items-center">
+                {% for chat in myChats %}
+                    <div class="chat p-4 w-[90%] flex justify-center items-center hover:bg-slate-600 rounded-md ">
+                    {{chat.question}}
+                    </div>
+                {% endfor %}
+                
+                
+            </div>
         </div> 
-        <div class="right w-10/12 flex justify-center items-center flex-col">
+        <div class="right1 w-10/12 flex justify-center items-center flex-col">
             <div class="text-3xl font-bold py-20">
                 Legal Document Analyzer
+            </div>
+            <div class="input w-full text-center my-24">
+                <input id="questionInput" class="hover:bg-gray-500 w-[40%] p-4 bg-gray-600 rounded-md" type="text" placeholder="Send a message" name="text" id="">
+                <button id="sendbutton" class="hover:opacity-40" >Send</button>
+            </div>
+        </div>
+        <div class="right2 w-full flex flex-col justify-center items-center h-fit">
+            <div class="box1 m-auto py-7 flex justify-start items-center w-[50vw] space-x-7">
+                <img style="border-radius: 50%;" class="w-10" src="https://lh3.googleusercontent.com/a/AEdFTp6xa-5LaHaPGceGPxE3IN7voISDEKXxZh8ABPGYnw=s96-c" alt="">
+                <div id="question2"> What is 1000876+453556</div>
+            </div>
+            <div class="box2 py-7 flex justify-center items-center bg-gray-500 w-full space-x-6">
+                <div class="box w-[50vw] flex justify-start space-x-7">
+                    <img style="border-radius: 50%;" class="w-9 h-9" src="https://lh3.googleusercontent.com/a/AEdFTp6xa-5LaHaPGceGPxE3IN7voISDEKXxZh8ABPGYnw=s96-c" alt="">
+                    <div class="flex flex-col space-y-4">
+                        <div id="question1"> Loading...</div>
+                        <div id="solution"> Loading...</div>
+                    </div>
+                    
+                    
+
+                </div>
+                
             </div>
             <div class="input w-full text-center my-24">
                 <input class="hover:bg-gray-500 w-[40%] p-4 bg-gray-600 rounded-md" type="text" placeholder="Send a message" name="text" id="">
                 <button class="hover:opacity-40" >Send</button>
             </div>
+
+            
         </div>
     </div>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>
