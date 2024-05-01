@@ -10,6 +10,163 @@
         .right2{
             display: none;
         }
+        .pdff{
+            display: none;
+        }
+        .chat{
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .left {
+    overflow-y: auto;
+    max-height: calc(100vh - 60px); /* Adjust as needed */
+}
+
+.right2 {
+    position: relative;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px); /* Adjust as needed */
+}
+.input2 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #000; /* Adjust background color */
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Ensure it's above other elements */
+        }
+
+        .loading-spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3); /* Light border */
+            border-top: 8px solid #ffffff; /* White border on top */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite; /* Rotate animation */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .question-answer {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9; /* Light gray background */
+        }
+
+        .question {
+            font-weight: bold;
+            color: #333; /* Dark text color */
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            color: #666; /* Slightly darker text color */
+        }
+        /* Font Styles */
+body {
+    font-family: Arial, sans-serif; /* Use a professional sans-serif font */
+    font-size: 16px; /* Set a comfortable font size */
+    line-height: 1.5; /* Improve readability with appropriate line height */
+    color: #333; /* Use a dark color for text */
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px; /* Add padding for better clickability */
+    background-color: #007bff; /* Use a professional blue color */
+    color: #fff; /* White text for better contrast */
+    border: none; /* Remove default button border */
+    border-radius: 4px; /* Add slight border-radius for modern look */
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover for feedback */
+}
+
+/* Input Field */
+input[type="text"] {
+    padding: 10px; /* Add padding for better input field appearance */
+    border: 1px solid #ccc; /* Add a subtle border for separation */
+    border-radius: 4px; /* Add border-radius for modern look */
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    background-color: rgba(255, 255, 255, 0.8); /* Use a semi-transparent white background */
+}
+
+/* Text Styling */
+.text-bold {
+    font-weight: bold; /* Make text bold for emphasis */
+}
+
+.text-center {
+    text-align: center; /* Center-align text for better readability */
+}
+
+/* Adjustments for specific elements */
+#summarizeButton {
+    margin-top: 20px; /* Add some space above the Summarize button */
+}
+
+/* Adjustments for responsive design */
+@media (max-width: 768px) {
+    /* Add responsive styles here */
+}
+/* Scrollbar Track */
+::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar handle */
+    border-radius: 6px; /* Roundness of the scrollbar handle */
+}
+
+/* Hover State for Scrollbar Handle */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker color on hover */
+}
+
+/* Scrollbar Track when Dragging */
+::-webkit-scrollbar-thumb:active {
+    background-color: #333; /* Even darker color when dragging */
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Background color of the scrollbar track */
+    border-radius: 10px; /* Roundness of the scrollbar track */
+}
+
+/* Scrollbar Corner */
+::-webkit-scrollbar-corner {
+    background-color: transparent; /* Hide scrollbar corner */
+}
+
+        
+        
+        
     </style>
 </head>
 <body class="bg-chatblack-50">
@@ -20,8 +177,8 @@
             </div>
             <div class="chats flex flex-col justify-center items-center">
                 {% for chat in myChats %}
-                    <div class="chat p-4 w-[90%] flex justify-center items-center hover:bg-slate-600 rounded-md ">
-                    {{chat.question}}
+                    <div class="chat p-4 w-[90%] flex justify-center items-center hover:bg-slate-600 rounded-md m">
+                    {{ chat.name }}
                     </div>
                 {% endfor %}
                 
@@ -29,40 +186,65 @@
             </div>
         </div> 
         <div class="right1 w-10/12 flex justify-center items-center flex-col">
-            <div class="text-3xl font-bold py-20">
+            <div class="text-4xl font-bold text-center mb-8">
                 Legal Document Analyzer
             </div>
-            <div class="input w-full text-center my-24">
-                <input id="questionInput" class="hover:bg-gray-500 w-[40%] p-4 bg-gray-600 rounded-md" type="text" placeholder="Send a message" name="text" id="">
-                <button id="sendbutton" class="hover:opacity-40" >Send</button>
-            </div>
-        </div>
-        <div class="right2 w-full flex flex-col justify-center items-center h-fit">
-            <div class="box1 m-auto py-7 flex justify-start items-center w-[50vw] space-x-7">
-                <img style="border-radius: 50%;" class="w-10" src="https://lh3.googleusercontent.com/a/AEdFTp6xa-5LaHaPGceGPxE3IN7voISDEKXxZh8ABPGYnw=s96-c" alt="">
-                <div id="question2"> What is 1000876+453556</div>
-            </div>
-            <div class="box2 py-7 flex justify-center items-center bg-gray-500 w-full space-x-6">
-                <div class="box w-[50vw] flex justify-start space-x-7">
-                    <img style="border-radius: 50%;" class="w-9 h-9" src="https://lh3.googleusercontent.com/a/AEdFTp6xa-5LaHaPGceGPxE3IN7voISDEKXxZh8ABPGYnw=s96-c" alt="">
-                    <div class="flex flex-col space-y-4">
-                        <div id="question1"> Loading...</div>
-                        <div id="solution"> Loading...</div>
+            <label for="pdfFile" class="file-upload-label">
+                <input type="file" id="pdfFile" class="hidden">
+                <div class="bg-white border border-gray-300 rounded-md shadow-md cursor-pointer hover:border-blue-500 transition duration-300 ease-in-out">
+                    <div class="p-6 flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V3a1 1 0 011-1zM6 7h3v3H6V7zm5 0h3v3h-3V7z" clip-rule="evenodd" />
+                        </svg>
+                        <p class="text-lg text-center text-gray-700">Drag & Drop or Click to Upload</p>
                     </div>
-                    
-                    
-
                 </div>
-                
-            </div>
-            <div class="input w-full text-center my-24">
-                <input class="hover:bg-gray-500 w-[40%] p-4 bg-gray-600 rounded-md" type="text" placeholder="Send a message" name="text" id="">
-                <button class="hover:opacity-40" >Send</button>
-            </div>
-
+            </label>
+            <button id="summarizeButton" class="mt-4 py-2 px-4 bg-green-500 text-white font-semibold rounded-md shadow-md hover:bg-green-600 transition duration-300 ease-in-out">
+                Summarize
+            </button>
             
-        </div>
+</div>
+
+        
+        
+        
+        <iframe class="pdff" id="pdfViewer" frameborder="0" style="width: 600px; height: 100%;"></iframe>
+        <div class="right2 w-6/12 flex flex-col justify-between items-center" style="width: 50%;">
+            <!-- Left side: PDF Viewer -->
+            <!-- Right side: Content of right22 -->
+            <div class="box1 m-auto py-7 flex justify-start items-center space-x-7">
+                <img style="border-radius: 50%;" class="w-10" src="https://lh3.googleusercontent.com/a/AEdFTp6xa-5LaHaPGceGPxE3IN7voISDEKXxZh8ABPGYnw=s96-c" alt="">
+                <div id="question2"> Please Wait...</div>
+            </div>
+            <div class="box2 py-7 flex flex-col justify-center items-center bg-gray-500 w-full space-x-6">
+                <div class="box flex justify-start space-x-7 bg-white rounded-lg p-4">
+                    <img class="w-9 h-9 rounded-full" src="https://lh3.googleusercontent.com/a/AEdFTp6xa-5LaHaPGceGPxE3IN7voISDEKXxZh8ABPGYnw=s96-c" alt="">
+                    <div class="flex flex-col space-y-4">
+                        <div id="question1" class="font-bold text-gray-800"> Loading...</div>
+                        <div id="solution" class="text-gray-600"> Loading...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input2 w-full text-center">
+                <input class="hover:bg-gray-500 w-[40%] p-4 bg-gray-600 rounded-md" type="text" placeholder="Send a message" name="text" id="questionInput">
+                <button id="sendbutton" class="hover:opacity-40">Send</button>
+            </div>
+</div>
+
+
+        
+        
+        
+    </div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
     </div>
     <script src="/static/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
+
 </body>
 </html>
